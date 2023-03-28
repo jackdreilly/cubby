@@ -1,7 +1,7 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Template from "../../../components/template.tsx";
 import { Cubby } from "../../../db.ts";
-import { form } from "../../create.tsx";
+import { form, resilientJSON } from "../../create.tsx";
 import { redirect } from "../delete/[...cubby_hole].ts";
 
 
@@ -12,7 +12,8 @@ export const handler = {
         });
     },
     async POST(request: Request, context: HandlerContext) {
-        const stuff = (await form<{ stuff: string }>(request)).stuff;
+        const stuffRaw = (await form<{ stuff: string }>(request)).stuff;
+        const stuff = resilientJSON(stuffRaw);
         const cubby = await Cubby.find(context.params.cubby_hole);
         cubby.stuff = stuff;
         cubby.update();

@@ -18,7 +18,9 @@ export function form<T>(r: Request): Promise<T> {
 
 export const handler = {
     async POST(request: Request) {
-        const { cubby_hole } = await Cubby.create(await form<{ stuff: string, cubby_hole: string }>(request));
+        const { stuff: stuffRaw, cubby_hole } = await form<{ stuff: string; cubby_hole: string; }>(request);
+        const stuff = resilientJSON(stuffRaw)
+        await Cubby.create({ stuff, cubby_hole });
         return redirect(`/cubbies/cubby/${cubby_hole}`, 303, "Redirecting to new cubby page");
     }
 }
@@ -35,4 +37,12 @@ export default function Create() {
             <input type="submit" class="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
         </form>
     </Template >
+}
+
+export function resilientJSON(stuffRaw: string) {
+    try {
+        return JSON.stringify(JSON.parse(stuffRaw), null, '\t');
+    } catch {
+        return JSON.stringify(stuffRaw);
+    }
 }
