@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import subprocess
 import json
 import os
 import sys
@@ -32,10 +33,24 @@ class CubbyStuff:
     def delete(self):
         return self._cubby.delete()
 
+    @property
+    def link(self) -> str:
+        return self._cubby.link
+
+    def web(self):
+        self._cubby.web()
+
 
 @dataclass(frozen=True)
 class Cubby:
     _cubby_hole_path: Path = Path("")
+
+    def web(self):
+        subprocess.run(["open", self.link])
+
+    @property
+    def link(self) -> str:
+        return f"{host}/cubbies/cubby/{self._cubby_hole}"
 
     @property
     def _cubby_hole(self) -> str:
@@ -71,7 +86,7 @@ class Cubby:
         return CubbyStuff(
             **requests.post(
                 f"{host}/api/cubbies/{self._cubby_hole}",
-                json=dict(stuff=json.dumps(stuff)),
+                json=dict(stuff=stuff),
             ).json()
         )
 

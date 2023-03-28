@@ -31,7 +31,7 @@ export const handler = {
         context: HandlerContext,
     ): Promise<Response> {
         const cubby_hole = context.params.cubby_hole;
-        const stuff = JSON.stringify((await form<{ stuff: unknown }>(request)).stuff, null, '\t');
+        const stuff = JSON.stringify((await request.json()).stuff, null, '\t');
         return json(await Cubby.create({ cubby_hole, stuff }));
     },
 }
