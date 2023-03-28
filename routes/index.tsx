@@ -17,8 +17,13 @@ export default function Home(
 ) {
   return (
     <Template title="Cubby" >
-      <h2 class="text-2xl">Python Support!</h2>
-      <pre class="bg-gray-100 rounded-xl m-5 p-5">{`
+      <div class="m-4 p-4 rounded-xl shadow-xl w-[fit-content]">
+      <h2 class="text-xl m-2">Recent Cubbies</h2>
+        <CubbyTable cubbies={cubbies} />
+      </div>
+      <div class="m-4 p-4 rounded-xl shadow-xl w-[fit-content]">
+        <h2 class="text-xl m-2">Python Support!</h2>
+        <pre class="bg-gray-100 rounded-xl m-5 p-5 text-xs">{`
 # pip install cubby
 import cubby
 # create a cubby
@@ -39,8 +44,7 @@ my_cubby.link
 # or better, open in chrome!
 my_cubby.web()
       `.trim()}</pre>
-      <h2 class="m-4">Recent Cubbies</h2>
-      <CubbyTable cubbies={cubbies} />
+      </div>
     </Template >
   );
 }
