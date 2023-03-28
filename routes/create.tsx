@@ -19,7 +19,7 @@ export function form<T>(r: Request): Promise<T> {
 export const handler = {
     async POST(request: Request) {
         const { cubby_hole } = await Cubby.create(await form<{ stuff: string, cubby_hole: string }>(request));
-        return redirect(`/cubbies/${cubby_hole}`, 303, "Redirecting to new cubby page");
+        return redirect(`/cubbies/cubby/${cubby_hole}`, 303, "Redirecting to new cubby page");
     }
 }
 
