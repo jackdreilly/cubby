@@ -79,7 +79,7 @@ class Cubby:
         return CubbyStuff(
             **requests.patch(
                 f"{host}/api/cubbies/{self._cubby_hole}",
-                json=dict(stuff=json.dumps(stuff)),
+                json=dict(stuff=stuff),
             ).json()
         )
 
