@@ -26,6 +26,9 @@ class CubbyStuff:
     def put(self, stuff: Any) -> CubbyStuff:
         return self._cubby.put(stuff)
 
+    def update(self, stuff: Any) -> CubbyStuff:
+        return self._cubby.update(stuff)
+
     def delete(self):
         return self._cubby.delete()
 
@@ -67,6 +70,14 @@ class Cubby:
     def put(self, stuff) -> CubbyStuff:
         return CubbyStuff(
             **requests.post(
+                f"{host}/api/cubbies/{self._cubby_hole}",
+                json=dict(stuff=json.dumps(stuff).encode("utf-8")),
+            ).json()
+        )
+
+    def update(self, stuff) -> CubbyStuff:
+        return CubbyStuff(
+            **requests.patch(
                 f"{host}/api/cubbies/{self._cubby_hole}",
                 json=dict(stuff=json.dumps(stuff).encode("utf-8")),
             ).json()
