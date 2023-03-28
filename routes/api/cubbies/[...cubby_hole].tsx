@@ -16,7 +16,7 @@ export const handler = {
         context: HandlerContext,
     ): Promise<Response> {
         const cubby = await Cubby.find(context.params.cubby_hole)
-        cubby.stuff = JSON.stringify((await form<{ stuff: unknown }>(request)).stuff, null, '\t');
+        cubby.stuff = JSON.stringify((await request.json()).stuff, null, '\t');
         await cubby.update();
         return json(cubby);
     },

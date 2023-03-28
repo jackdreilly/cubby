@@ -71,7 +71,7 @@ class Cubby:
         return CubbyStuff(
             **requests.post(
                 f"{host}/api/cubbies/{self._cubby_hole}",
-                json=dict(stuff=json.dumps(stuff).encode("utf-8")),
+                json=dict(stuff=json.dumps(stuff)),
             ).json()
         )
 
@@ -79,7 +79,7 @@ class Cubby:
         return CubbyStuff(
             **requests.patch(
                 f"{host}/api/cubbies/{self._cubby_hole}",
-                json=dict(stuff=json.dumps(stuff).encode("utf-8")),
+                json=dict(stuff=json.dumps(stuff)),
             ).json()
         )
 
